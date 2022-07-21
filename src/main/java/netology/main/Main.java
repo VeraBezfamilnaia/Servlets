@@ -1,14 +1,14 @@
-package servlet;
+package netology.main;
 
-import controller.PostController;
-import repository.PostRepository;
-import service.PostService;
+import netology.config.JavaConfig;
+import netology.controller.PostController;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MainServlet extends HttpServlet {
+public class Main extends HttpServlet {
     private static final int ADDITIONAL_INDEX = 1;
     private static final String GET = "GET";
     private static final String POST = "POST";
@@ -17,9 +17,8 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() {
-        final var repository = new PostRepository();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        final var context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        controller = context.getBean(PostController.class);
     }
 
     @Override

@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>main</servlet-name>
-        <servlet-class>servlet.MainServlet</servlet-class>
+        <servlet-class>netology.main.Main</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
