@@ -1,7 +1,7 @@
-package validator;
+package netology.validator;
 
-import exception.NotFoundException;
-import model.Post;
+import netology.exception.NotFoundException;
+import netology.model.Post;
 
 import java.util.List;
 

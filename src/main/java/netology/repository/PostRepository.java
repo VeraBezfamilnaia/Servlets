@@ -1,12 +1,14 @@
-package repository;
+package netology.repository;
 
-import model.Post;
-import validator.PostValidator;
+import netology.model.Post;
+import org.springframework.stereotype.Repository;
+import netology.validator.PostValidator;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Repository
 public class PostRepository {
     private final static int NEW_POST_INDEX = 0;
     private final static int START_POST_INDEX = 1;

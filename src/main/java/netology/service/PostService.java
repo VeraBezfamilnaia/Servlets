@@ -1,11 +1,13 @@
-package service;
+package netology.service;
 
-import exception.NotFoundException;
-import model.Post;
-import repository.PostRepository;
+import netology.exception.NotFoundException;
+import netology.model.Post;
+import org.springframework.stereotype.Service;
+import netology.repository.PostRepository;
 
 import java.util.List;
 
+@Service
 public class PostService {
     private final PostRepository repository;
 
