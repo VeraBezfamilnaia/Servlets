@@ -1,8 +1,8 @@
-package controller;
+package netology.controller;
 
 import com.google.gson.Gson;
-import model.Post;
-import service.PostService;
+import netology.model.Post;
+import netology.service.PostService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
