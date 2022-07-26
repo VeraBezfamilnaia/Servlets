@@ -4,22 +4,26 @@ import model.Post;
 import validator.PostValidator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class PostRepository {
     private final static int NEW_POST_INDEX = 0;
     private final static int START_POST_INDEX = 1;
-    private final List<Post> posts = new CopyOnWriteArrayList<>();
-    private long counter = START_POST_INDEX;
+    private final Map<Post, AtomicInteger> posts = new ConcurrentHashMap<>();
+    private final AtomicInteger counter = new AtomicInteger(START_POST_INDEX);
 
-    public List<Post> all() {
-        PostValidator.validate(posts);
-        return posts;
+    public Set<Post> all() {
+        return getPosts();
     }
 
     public Optional<Post> getById(long id) {
-        for (var post : posts) {
+        for (var post : getPosts()) {
             if (post.getId() == id) {
                 return Optional.of(post);
             }
@@ -29,7 +33,7 @@ public class PostRepository {
     }
 
     public Post save(Post post) {
-        if (post.getId() == NEW_POST_INDEX) {
+        if ( post.getId() == NEW_POST_INDEX) {
             addNewPost(post);
         } else {
             updatePost(post);
@@ -38,17 +42,23 @@ public class PostRepository {
     }
 
     public void removeById(long id) {
-        var existingPost = PostValidator.validate(posts, id);
+        var currentPosts = getPosts();
+        var existingPost = PostValidator.validate(currentPosts, id);
         posts.remove(existingPost);
     }
 
     private void addNewPost(Post post) {
-        post.setId(counter++);
-        posts.add(post);
+        post.setId(counter.getAndIncrement());
+        posts.put(post, counter);
     }
 
     private void updatePost(Post post) {
-        var existingPost = PostValidator.validate(posts, post);
+        var currentPosts = getPosts();
+        var existingPost = PostValidator.validate(currentPosts, post);
         existingPost.setContent(post.getContent());
+    }
+
+    private Set<Post> getPosts() {
+        return posts.keySet();
     }
 }

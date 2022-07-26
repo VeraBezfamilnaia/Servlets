@@ -4,9 +4,10 @@ import exception.NotFoundException;
 import model.Post;
 
 import java.util.List;
+import java.util.Set;
 
 public class PostValidator {
-    public static Post validate(List<Post> posts, Post post) {
+    public static Post validate(Set<Post> posts, Post post) {
         long id = post.getId();
         for (var existingPost : posts) {
             if (existingPost.getId() == id) {
@@ -16,19 +17,12 @@ public class PostValidator {
         throw new NotFoundException("Post with this id wasn't found");
     }
 
-    public static void validate(List<Post> posts) {
-        if (posts.isEmpty()) {
-            throw new NotFoundException("Any posts haven't been saved yet");
-        }
-    }
-
-    public static Post validate(List<Post> posts, long id) {
+    public static Post validate(Set<Post> posts, long id) {
         for (var post : posts) {
             if (post.getId() == id) {
                 return post;
             }
         }
-        throw new NotFoundException("Post were not found");
+        throw new NotFoundException("Post weren't found");
     }
-
 }

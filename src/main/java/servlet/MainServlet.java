@@ -1,6 +1,7 @@
 package servlet;
 
 import controller.PostController;
+import exception.NotFoundException;
 import repository.PostRepository;
 import service.PostService;
 
@@ -46,6 +47,8 @@ public class MainServlet extends HttpServlet {
                 controller.removeById(id, resp);
                 return;
             }
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
