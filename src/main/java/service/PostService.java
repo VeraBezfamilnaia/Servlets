@@ -4,6 +4,7 @@ import exception.NotFoundException;
 import model.Post;
 import repository.PostRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class PostService {
         this.repository = repository;
     }
 
-    public Set<Post> all() {
+    public Collection<Post> all() {
         return repository.all();
     }
 
